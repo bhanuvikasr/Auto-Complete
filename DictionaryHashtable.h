@@ -7,6 +7,7 @@
 #define DICTIONARY_HASHTABLE_H
 
 #include <string>
+#include <unordered_set>
 
 /**
  *  The class for a dictionary ADT, implemented as a Hashtable
@@ -33,6 +34,9 @@ public:
 
 private:
   // Add your own data members and methods here
+	std::unordered_set<std::string> dict_h;
+        std::pair<std::unordered_set<std::string>::const_iterator,bool> ret;
+
 };
 
 #endif // DICTIONARY_HASHTABLE_H
