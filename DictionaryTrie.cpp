@@ -1,6 +1,11 @@
 #include "util.h"
 #include "DictionaryTrie.h"
 
+
+TSTNode::TSTNode(const char & d, bool w, const int & f) : data(d), isWord(w), 
+	freq(f), left(0), middle(0), right(0), parent(0) {}
+
+
 /* Create a new Dictionary that uses a Trie back end */
 DictionaryTrie::DictionaryTrie(){}
 
@@ -10,6 +15,69 @@ DictionaryTrie::DictionaryTrie(){}
  * invalid (empty string) */
 bool DictionaryTrie::insert(std::string word, unsigned int freq)
 {
+	if(word.len==0){
+		return false;
+	}
+	if (root==NULL) {
+		if (word.len==1) {
+			root = new TSTNode(word[0], true, freq);
+		}
+		else {
+			root = new TSTNode(word[0], false, 0);
+		}
+	}
+	TSTNode* curr = root;
+	for (int i=0; i<word.len; i++) {
+		if (curr->data==word[i]) {
+			if (curr->middle==NULL ) {
+				if(i!=word.len-1){
+					//bool end_of_word = (i==word.len-2)
+					curr->middle = new TSTNode(word[i+1],false,0);
+					curr = curr->middle;
+				}
+				else return false; // the word already exists
+			}
+			else {	// going to left or right
+			  curr = curr->middle;
+			  if(word[i]<curr->data){// going to left node
+				  if (curr->left==NULL ) {
+				    if(i!=word.len-1){
+					//bool end_of_word = (i==word.len-2)
+					curr->left = new TSTNode(word[i+1],false,0);
+					curr = curr->left;
+				    }
+				    else return false; // word already exista
+				  }
+				  else return false; // word cannot be inserted because there is already something at this place.
+				 }
+				else{// going to right node
+				  if (curr->right==NULL ) {
+				    if(i!=word.len-1){
+					//bool end_of_word = (i==word.len-2)
+					curr->right = new TSTNode(word[i+1],false,0);
+					curr = curr->right;
+				    }
+				    else return false; // word already exists
+				  }
+				  else return false; // word cannot be inserted because there is already something at this place.
+				 }
+				}
+			}
+			
+			 
+		}
+	else {
+	  while (word[i]!=curr->data) {
+	    if 
+	}
+		else if (word[i]<curr->data) {
+			curr = curr->l
+		else {
+
+		}
+			if (curr==NULL) {
+				TSTNode* created(
+	
   return false;
 }
 

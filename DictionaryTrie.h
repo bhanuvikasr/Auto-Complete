@@ -9,6 +9,26 @@
 #include <vector>
 #include <string>
 
+/** 
+ * Class that stores the characters, if the character is the terminus of a
+ * word, as well as the frequency. It is contained by the TST.
+ */
+class TSTNode {
+
+public:
+  TSTNode* left;
+  TSTNode* middle;
+  TSTNode* right;
+  TSTNode* parent;
+  const char data;
+  bool isWord;
+  int freq; 
+
+  TSTNode(char d, bool w, int f);
+
+};
+
+
 /**
  *  The class for a dictionary ADT, implemented as a trie
  *  You may implement this class as either a mulit-way trie
@@ -48,6 +68,7 @@ public:
   ~DictionaryTrie();
 
 private:
+	TSTNode* root;
   // Add your own data members and methods here
 };
 
