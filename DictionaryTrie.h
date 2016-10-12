@@ -24,7 +24,7 @@ public:
   bool isWord;
   int freq; 
 
-  TSTNode(char d, bool w, int f);
+  TSTNode(const char d, bool w, const unsigned int f);
 
 };
 
