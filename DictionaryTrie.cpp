@@ -27,11 +27,10 @@ bool DictionaryTrie::insert(std::string word, unsigned int freq){
 		}
 	}
 	TSTNode* curr = root;
-	//bool end_of_word = false;
 	for (unsigned int i=0; i<word.length();) { // iterates over i and also over nodes of the tree
 		if (curr->data==word[i]) {
 			if (curr->middle==NULL ) { // create new node or end searching.
-				if(i!=word.length()-1){ // checking if the pointer is at the end of the string.
+				if(i!=word.length()-1){ // checking if pointer is at the end of the string.
 					bool end_of_word = (i==word.length()-2);
 					curr->middle = new TSTNode(word[i+1],end_of_word,end_of_word?freq:0);
 					curr = curr->middle;
@@ -39,12 +38,17 @@ bool DictionaryTrie::insert(std::string word, unsigned int freq){
 					if (end_of_word) return true;
 					
 				}
-				else if(!curr->isWord){ // checking if the bool value is set to false. If yes change it to true to insert the word
+				// checking if isWord is false. If false change it to true to insert the word
+				else if(!curr->isWord){ 
 					curr->isWord = true;
 					curr->freq = freq;
 					return true;
 				}
-				else return false; // the word already exists since isWord is true.
+				else {
+					// the word already exists since isWord is true. Update freq is greater.
+					if (curr->freq<freq) curr->freq = freq;
+					return false;
+                                } 
 			}
 			else {	// have to repeat whole thing again.
 			  if(i==word.length()-1){ // if end of the word
@@ -54,6 +58,7 @@ bool DictionaryTrie::insert(std::string word, unsigned int freq){
 					return true;
 				}
 				else { // trying to reinsert.
+                                        if (curr->freq<freq) curr->freq = freq;
 					return false;
 				}
 			  }
@@ -64,18 +69,17 @@ bool DictionaryTrie::insert(std::string word, unsigned int freq){
 			  }
 			}	
 		}
-		else if(word[i]<curr->data) { // word is less than data in the node, traverse left
+		// word is less than data in the node, traverse left
+		else if(word[i]<curr->data) {
 			if(curr->left==NULL){
 				bool end_of_word = (i==word.length()-1);
 				curr->left = new TSTNode(word[i], end_of_word,end_of_word?freq:0);
 				curr = curr->left;
-				//i--;
 				if (end_of_word) return true;
 				
 			}
 			else{ // there is node at left position
 				curr = curr->left;
-				//i--; // because at the end of the loop i gets incremented which is not desired.
 				continue;
 			}
 		}
@@ -84,13 +88,11 @@ bool DictionaryTrie::insert(std::string word, unsigned int freq){
 				bool end_of_word = (i==word.length()-1);
 				curr->right = new TSTNode(word[i], end_of_word,end_of_word?freq:0);
 				curr = curr->right;
-				//i--;
 				if (end_of_word) return true;
 				
 			}
 			else{ // there is node at right position
 				curr = curr->right;
-				//i--; // because at the end of the loop i gets incremented which is not desired.
 				continue;
 			}
 		}

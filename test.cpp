@@ -180,6 +180,18 @@ int main(int argc, char** argv)
     }
 
   cout << endl;
-	
+
+  // test fequency
+  tt = dt.insert("frequency" , 1);
+  if (!tt) cout << "Falied insert of 'frequency'" << endl;
+  dt.find("frequency");
+  tt = dt.insert("frequency" , 10);
+  if (tt) cout << "Falied second insert of 'frequency'" << endl;
+  dt.find("frequency");
+  tt = dt.insert("frequency" , 100);
+  if (tt) cout << "Falied third insert of 'frequency'" << endl;
+  dt.find("frequency");
+
+  	
   return 0;
 }

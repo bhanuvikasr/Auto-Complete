@@ -22,7 +22,7 @@ public:
   TSTNode* parent;
   const char data;
   bool isWord;
-  int freq; 
+  unsigned int freq; 
 
   TSTNode(const char d, bool w, const unsigned int f);
 
