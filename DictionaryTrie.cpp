@@ -122,25 +122,26 @@ TSTNode* DictionaryTrie::getPrefixNode(std::string word) const{
 	}
 	TSTNode* curr = root;
 	for(unsigned int i=0; i<word.length();){
-		int f =0;
-		bool isWord = false;
+		int f = 0;
 		if(curr != NULL) {
 			if(curr->data == word[i]){
 				i++;
+				if(i==word.length()){
+					return curr;
+				}
 				f = curr->freq;
-				isWord = curr->isWord;
-				curr=curr->middle;
+				curr = curr->middle;
 			}
 			else if (word[i] < curr->data){
 				curr = curr->left;
 			}
 			else {
-				curr = curr ->right;
+				curr = curr->right;
 			}
 		}
 		else return NULL;
-		if(i==word.length()&&isWord){
-			cout<<"freq is " << f<<"... ";
+		if(i==word.length()){
+			cout << "freq is " << f << "... ";
 			return curr;
 		}
 	}
@@ -169,7 +170,7 @@ std::vector<std::string> DictionaryTrie::predictCompletions(std::string prefix, 
   node = getPrefixNode(prefix);
   if(node!=NULL){
 	if(node->isWord){
-	  top_words.push_back(std::make_pair(prefix,node->freq));
+	  top_words.push_back(std::make_pair(prefix, node->freq));
 	}
   }
   else {
@@ -204,20 +205,20 @@ void DictionaryTrie::getWords(TSTNode* node, std::string str, std::list<std::pai
 		if (node->isWord){ // if the node is a word update the top_words list
 			// add the pair if its freq is higher than min freq in the list.
 			if (top_words.size()<num_completions){
-				top_words.push_back(std::make_pair(temp_str,node->freq));
+				top_words.push_back(std::make_pair(temp_str, node->freq));
 			}
 			else {
 				unsigned int f_new = node->freq;
 				unsigned int f_min = 0;
-				std::list<std::pair<std::string ,unsigned int>>::iterator it_min;
-				for (std::list<std::pair<std::string ,unsigned int>>::iterator it=top_words.begin(); it != top_words.end(); ++it){
+				std::list<std::pair<std::string, unsigned int>>::iterator it_min;
+				for (std::list<std::pair<std::string, unsigned int>>::iterator it=top_words.begin(); it != top_words.end(); ++it){
 					if(it->second < f_min){
 						f_min = it->second;
 						it_min = it;
 					}
 				}
 				
-				if (f_min <f_new){
+				if (f_min < f_new){
 					top_words.erase(it_min);
 					top_words.push_back(std::make_pair(temp_str,f_new));
 				}
@@ -225,13 +226,9 @@ void DictionaryTrie::getWords(TSTNode* node, std::string str, std::list<std::pai
 			}
 			
 		}
-		else{
-			getWords(node->middle, temp_str ,top_words, num_completions);
-			getWords(node->left, str ,top_words, num_completions);
-			getWords(node->right, str ,top_words, num_completions);
-			
-		}
-	return;
+		getWords(node->middle, temp_str, top_words, num_completions);
+		getWords(node->left, str, top_words, num_completions);
+		getWords(node->right, str, top_words, num_completions);
 	}
 	return;
 }
