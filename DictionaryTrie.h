@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <string>
+#include <list>
 
 /** 
  * Class that stores the characters, if the character is the terminus of a
@@ -22,7 +23,7 @@ public:
   TSTNode* parent;
   const char data;
   bool isWord;
-  unsigned int freq; 
+  int freq; 
 
   TSTNode(const char d, bool w, const unsigned int f);
 
@@ -70,6 +71,12 @@ public:
 private:
 	TSTNode* root;
   // Add your own data members and methods here
+  
+  /**getPrefixNode is a helper function that returns the pointer to the last letter of the word. If the word is not found in the Dict then it returns a NULL pointer.
+  */
+  TSTNode* getPrefixNode(std::string word) const;
+  
+  void getWords(TSTNode* node, std::string str, std::list<std::pair<std::string ,unsigned int>> & top_words, unsigned int num_completions) const;
 };
 
 #endif // DICTIONARY_TRIE_H

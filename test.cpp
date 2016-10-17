@@ -199,6 +199,16 @@ int main(int argc, char** argv)
   Utils u;
   u.load_dict(dt, in);
   
-  dt.find("zymoses");  	
+  dt.find("zymoses");
+  
+  std::vector<std::string> predicted_words;
+  predicted_words = dt.predictCompletions("zymo",14);
+  
+  std::cout << predicted_words.size();
+  
+  for (std::vector<std::string>::iterator it = predicted_words.begin() ; it != predicted_words.end(); ++it)
+    std::cout << ' ' << *it;
+  
+  //cout<< predicted_words[0];
   return 0;
 }
