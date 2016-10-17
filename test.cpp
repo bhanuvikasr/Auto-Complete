@@ -1,4 +1,5 @@
 #include<iostream>
+#include<fstream>
 #include<string>
 #include<algorithm>
 #include<set>
@@ -192,6 +193,12 @@ int main(int argc, char** argv)
   if (tt) cout << "Falied third insert of 'frequency'" << endl;
   dt.find("frequency");
 
-  	
+  ifstream in;
+  in.open(argv[1]);
+ 
+  Utils u;
+  u.load_dict(dt, in);
+  
+  dt.find("zymoses");  	
   return 0;
 }
