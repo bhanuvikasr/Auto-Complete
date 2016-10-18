@@ -224,7 +224,7 @@ void Utils::load_dict(DictionaryTrie& dict, istream& words)
 /*                                                                                                                                                                                                              
  * Load num_words from words stream into the dictionary trie
  */
-/*
+
 void Utils::load_dict(DictionaryTrie& dict, istream& words, unsigned int num_words)
 {
   unsigned int freq;
@@ -258,5 +258,5 @@ void Utils::load_dict(DictionaryTrie& dict, istream& words, unsigned int num_wor
       word_string.clear();
     }
 }
-*/
+
 
