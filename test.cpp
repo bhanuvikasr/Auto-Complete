@@ -199,7 +199,12 @@ int main(int argc, char** argv)
   Utils u;
   u.load_dict(dt, in);
   
-  dt.find("zymoses");
+  tt = dt.find("zymoses");
+  
+  if(!tt)
+	{
+	cout << "failed for DictionaryTrie... ";
+	}
   
   std::vector<std::string> predicted_words;
   predicted_words = dt.predictCompletions("zymo",14);
