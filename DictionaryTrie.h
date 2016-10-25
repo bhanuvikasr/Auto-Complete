@@ -81,6 +81,8 @@ private:
   TSTNode* getPrefixNode(std::string word) const;
 
   void getWords(TSTNode* node, std::string str, std::list<std::pair<std::string ,unsigned int>> & top_words, unsigned int num_completions) const;
+  
+  void deleteAll(TSTNode* n) const;
 };
 
 #endif // DICTIONARY_TRIE_H

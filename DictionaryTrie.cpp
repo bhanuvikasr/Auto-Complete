@@ -237,4 +237,24 @@ void DictionaryTrie::getWords(TSTNode* node, std::string str, std::list<std::pai
 }
 
 /* Destructor */
-DictionaryTrie::~DictionaryTrie(){}
+DictionaryTrie::~DictionaryTrie(){
+	deleteAll(root);
+	
+}
+
+void DictionaryTrie::deleteAll(TSTNode* n) const
+{
+  // TODO
+  // post order traversal of nodes
+  if(!n){ // exits if its a null pointer
+	  return;
+  }
+  else{
+	deleteAll(n->left);
+	deleteAll(n->middle);
+	deleteAll(n->right);
+	delete n;
+	return;
+	
+  }
+}
