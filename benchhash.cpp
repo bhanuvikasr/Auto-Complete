@@ -46,7 +46,6 @@ long sfold(string s, unsigned int m_size) {
     mult *= 256;
   }
 
-  cout << s << " hash is " << sum << endl;
   return(abs(sum) % m_size);
 }
 
