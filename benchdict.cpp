@@ -40,13 +40,17 @@ int main(int argc, char**argv){
 
 	for (int i =0;i<num_iterations;i++){
 		// reset the if stream
-		ifstream in;
+		ifstream in1;
+		ifstream in2;
+		ifstream in3;
 		Utils u;
 		DictionaryBST d_bst;
 		DictionaryHashtable d_ht;
 		DictionaryTrie dt;
 
-		in.open(argv[4]);
+		in1.open(argv[4]);
+		in2.open(argv[4]);
+		in3.open(argv[4]);
 
 		int size = min_size +i*step_size;
 
@@ -56,11 +60,11 @@ int main(int argc, char**argv){
 			insert_count = line_count;
 		}
 
-		u.load_dict(d_bst, in, size);
+		u.load_dict(d_bst, in1, size);
 
-		u.load_dict(d_ht, in, size);
+		u.load_dict(d_ht, in2, size);
 
-		u.load_dict(dt, in, size);
+		u.load_dict(dt, in3, size);
 
 		string junk;
 		string data = "";
@@ -69,9 +73,9 @@ int main(int argc, char**argv){
 		vector<string> word_string;
 		vector<std::string> hundred_words;
 		int j = 0;
-		while(getline(in, data) && j < 100)
+		while(getline(in1, data) && j < 100)
 		{
-			if(in.eof()) break;
+			if(in1.eof()) break;
 			temp_word = "";
 			word = "";
 			data = data + " .";
