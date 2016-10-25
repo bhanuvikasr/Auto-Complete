@@ -95,7 +95,7 @@ int main(int argc, char**argv){
 		}
 
 		long long rv = 0;
-		int iter = 50;
+		int iter = 5000;
 		for(int i=0; i<iter; i++){
 			Timer t;
 			t.begin_timer();
