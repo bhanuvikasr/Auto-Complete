@@ -1,3 +1,10 @@
+/* Author: Dion Chung & Bhanu Renukuntla
+   Date: 10/24/16
+   Assignment: PA2
+   This is the definition for DictionaryHashtable which utilzes unordered_set
+   from the standard library for functions find and insert.
+*/
+
 #include "util.h"
 #include "DictionaryHashtable.h"
 #include <unordered_set>

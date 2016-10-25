@@ -1,7 +1,9 @@
-/**
- *  CSE 100 PA3 C++ Autocomplete
- *  Authors: Jor-el Briones, Christine Alvarado
- */
+/* Author: Dion Chung & Bhanu Renukuntla
+   Date: 10/24/16
+   Assignment: PA2
+   This is the declaration for DictionaryBST which utilzes set from the
+   standard library.
+*/
 
 #ifndef DICTIONARY_BST_H
 #define DICTIONARY_BST_H
@@ -12,8 +14,8 @@
 /**
  *  The class for a dictionary ADT, implemented as a BST
  * When you implement this class, you MUST use a balanced binary
- * search tree in its implementation.  The C++ set implements 
- * a balanced BST, so we strongly suggest you use that to store 
+ * search tree in its implementation.  The C++ set implements
+ * a balanced BST, so we strongly suggest you use that to store
  * the dictionary.
  */
 class DictionaryBST
@@ -33,7 +35,6 @@ public:
   ~DictionaryBST();
 
 private:
-  // Add your own data members and methods here
 	std::set<std::string> dict_bst;
         std::pair<std::set<std::string>::iterator,bool> ret;
 };

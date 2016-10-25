@@ -1,3 +1,11 @@
+/* Author: Dion Chung & Bhanu Renukuntla
+   Date: 10/24/16
+   Assignment: PA2
+   This defines test cases that tests the correctness of DictionaryBST,
+   DictionaryHashtable, and DictionaryTrie. Tests inserts, finds and
+   predictCompletions.
+*/
+
 #include<iostream>
 #include<fstream>
 #include<string>
@@ -31,22 +39,17 @@ int main(int argc, char** argv)
   int t_bst, t_ht, tt;
 
   words.push_back(" harry");
-  //words.push_back("hArry");
-  //words.push_back("Harry");
+  words.push_back("hArry");
+  words.push_back("Harry");
   words.push_back("sriram");
   words.push_back("cse");
   words.push_back("crucio");
   words.push_back("autocomplete");
-  
+
   words.push_back("har");
   words.push_back("auto");
-  //words.push_back("hcse");
-  //words.push_back("cs");
-  //words.push_back("cscrucio");
   words.push_back("back");
   words.push_back("bat");
-  //words.push_back("Auto");
-  //words.push_back("H arry");
   words.push_back("  ");
   cout << "Inserting into Dictionaries..." << endl;
 
@@ -58,7 +61,6 @@ int main(int argc, char** argv)
       t_bst = d_bst.insert(*wit);
       t_ht = d_ht.insert(*wit);
       tt = dt.insert(*wit, 2);
-      //cout << t_bst << " " << t_ht << " "<< tt << "... ";
       if(!t_bst)
 	{
 	  cout << "failed for DictionaryBST... ";
@@ -109,10 +111,9 @@ int main(int argc, char** argv)
 
   cout << endl;
 
-  
-/*You are supposed to add more test cases in this file */
-	
-	cout << "finding words in Dictionaries..." << endl;
+
+
+  cout << "finding words in Dictionaries..." << endl;
   wit = words.begin();
   wen = words.end();
   for(; wit != wen; ++wit)
@@ -121,7 +122,6 @@ int main(int argc, char** argv)
       t_bst = d_bst.find(*wit);
       t_ht = d_ht.find(*wit);
       tt = dt.find(*wit);
-      //cout << t_bst << " " << t_ht << " "<< tt << "... ";
       if(!t_bst)
 	{
 	  cout << "failed for DictionaryBST... ";
@@ -142,7 +142,7 @@ int main(int argc, char** argv)
     }
 
 	cout << endl << "Finding words that are not inserted in Dictionaries..." << endl;
-	
+
 	vector<std::string> find_words;
 	find_words.push_back("hcse");
 	find_words.push_back("csrucio");
@@ -151,8 +151,8 @@ int main(int argc, char** argv)
 	find_words.push_back("apple");
 	find_words.push_back("bac");
 	find_words.push_back(" ");
-	
-	
+
+
   wit = find_words.begin();
   wen = find_words.end();
   for(; wit != wen; ++wit)
@@ -193,27 +193,40 @@ int main(int argc, char** argv)
   if (tt) cout << "Falied third insert of 'frequency'" << endl;
   dt.find("frequency");
 
-  ifstream in;
-  in.open(argv[1]);
- 
-  Utils u;
-  u.load_dict(dt, in);
-  
-  tt = dt.find("zymoses");
-  
-  if(!tt)
-	{
-	cout << "failed for DictionaryTrie... ";
+  dt.insert("zymogen", 539);
+  dt.insert("zymogene", 432);
+  dt.insert("zymogenes", 333);
+  dt.insert("zymogens", 430);
+  dt.insert("zymogram", 429);
+  dt.insert("zymograms", 332);
+  dt.insert("zymologies", 871);
+  dt.insert("zymology", 428);
+  dt.insert("zymosan", 538);
+  dt.insert("zymosans", 427);
+  dt.insert("zymoses", 536);
+  dt.insert("zymosis", 135);
+  dt.insert("zymotic", 534);
+
+  vector<string> predicted_words;
+  predicted_words = dt.predictCompletions("zymo", 14);
+
+  cout << "Test predictCompletions" << endl;
+  if(predicted_words.size()==13) {
+	   cout << "CORRECT size of predictCompletions" << endl;
 	}
-  
-  std::vector<std::string> predicted_words;
-  predicted_words = dt.predictCompletions("zymo",14);
-  
-  std::cout << predicted_words.size();
-  
-  for (std::vector<std::string>::iterator it = predicted_words.begin() ; it != predicted_words.end(); ++it)
-    std::cout << ' ' << *it;
-  
-  //cout<< predicted_words[0];
+  if (predicted_words[0]=="zymologies") {
+    cout << "CORRECT most frequent word first " << predicted_words[0] << endl;
+  }
+  if (predicted_words[12]=="zymosis") {
+    cout << "CORRECT least frequent word last " << predicted_words[12] << endl;
+  }
+
+  cout << "Test predictCompletions on empty string" << endl;
+  predicted_words = dt.predictCompletions("", 14);
+
+  if (predicted_words.size()==0) {
+    cout << "CORRECT Empty string search, 0 results returned" << endl;
+  }
+
   return 0;
 }

@@ -1,10 +1,18 @@
+/* Author: Dion Chung & Bhanu Renukuntla
+   Date: 10/24/16
+   Assignment: PA2
+   This is the definition for TSTNode and DictionaryTrie. Lower case letters and
+	 space are valid characters, while capital letters are considered invalid, due
+	 to properties of Ternary Trie, it is accepted.
+*/
+
 #include "util.h"
 #include "DictionaryTrie.h"
 #include <list>
 using namespace std;
 
 
-TSTNode::TSTNode(const char d, bool w, const unsigned int f) : data(d), isWord(w), 
+TSTNode::TSTNode(const char d, bool w, const unsigned int f) : data(d), isWord(w),
 	freq(f), left(0), middle(0), right(0), parent(0) {}
 
 
@@ -15,7 +23,7 @@ DictionaryTrie::DictionaryTrie():root(0) {}
  * Return true if the word was inserted, and false if it
  * was not (i.e. it was already in the dictionary or it was
  * invalid (empty string) */
-bool DictionaryTrie::insert(std::string word, unsigned int freq){
+ 	bool DictionaryTrie::insert(std::string word, unsigned int freq){
 	if(word.length()==0){
 		return false;
 	}
@@ -28,7 +36,6 @@ bool DictionaryTrie::insert(std::string word, unsigned int freq){
 		}
 	}
 	TSTNode* curr = root;
-	//bool end_of_word = false;
 	for (unsigned int i=0; i<word.length();) { // iterates over i and also over nodes of the tree
 		if (curr->data==word[i]) {
 			if (curr->middle==NULL ) { // create new node or end searching.
@@ -38,7 +45,7 @@ bool DictionaryTrie::insert(std::string word, unsigned int freq){
 					curr = curr->middle;
 					i++;
 					if (end_of_word) return true;
-					
+
 				}
 				else if(!curr->isWord){ // checking if the bool value is set to false. If yes change it to true to insert the word
 					curr->isWord = true;
@@ -63,20 +70,18 @@ bool DictionaryTrie::insert(std::string word, unsigned int freq){
 				i++;
 				continue;
 			  }
-			}	
+			}
 		}
 		else if(word[i]<curr->data) { // word is less than data in the node, traverse left
 			if(curr->left==NULL){
 				bool end_of_word = (i==word.length()-1);
 				curr->left = new TSTNode(word[i], end_of_word,end_of_word?freq:0);
 				curr = curr->left;
-				//i--;
 				if (end_of_word) return true;
-				
+
 			}
 			else{ // there is node at left position
 				curr = curr->left;
-				//i--; // because at the end of the loop i gets incremented which is not desired.
 				continue;
 			}
 		}
@@ -85,17 +90,15 @@ bool DictionaryTrie::insert(std::string word, unsigned int freq){
 				bool end_of_word = (i==word.length()-1);
 				curr->right = new TSTNode(word[i], end_of_word,end_of_word?freq:0);
 				curr = curr->right;
-				//i--;
 				if (end_of_word) return true;
-				
+
 			}
 			else{ // there is node at right position
 				curr = curr->right;
-				//i--; // because at the end of the loop i gets incremented which is not desired.
 				continue;
 			}
 		}
-	}	
+	}
 	return false;
 }
 
@@ -110,11 +113,13 @@ bool DictionaryTrie::find(std::string word) const
 	else{
 		return node->isWord;
 	}
-	
+
 	return false;
 }
 
-/**getPrefixNode is a helper function that returns the pointer to the last letter of the word. If the word is not found in the Dict then it returns a NULL pointer.
+/* getPrefixNode is a helper function that returns the pointer to the last
+letter of the word. If the word is not found in the Dict then it returns a
+NULL pointer.
   */
 TSTNode* DictionaryTrie::getPrefixNode(std::string word) const{
 	if(word.length()==0){
@@ -163,24 +168,24 @@ std::vector<std::string> DictionaryTrie::predictCompletions(std::string prefix, 
   std::vector<std::string> words;
   std::list<std::pair<std::string ,unsigned int>> top_words;
   TSTNode* node;
-  if(num_completions==0){
+  if(num_completions==0 || prefix==""){
+		cout << "WARNING, this empty search will return 0 results" << endl;
 	  return words;
   }
   // get the node of the prefix
   node = getPrefixNode(prefix);
   if(node!=NULL){
-	if(node->isWord){
-	  top_words.push_back(std::make_pair(prefix, node->freq));
-	}
+		if(node->isWord){
+		  top_words.push_back(std::make_pair(prefix, node->freq));
+		}
   }
   else {
 	  return words;
   }
   getWords(node->middle,prefix,top_words, num_completions);
-  
+
   // order and copy the words to words vector
-  
-  //unsigned int f_new = 0;
+
   while(top_words.size()!=0){
 	  unsigned int f_max = 0;
 	  std::list<std::pair<std::string ,unsigned int>>::iterator it_max;
@@ -190,17 +195,17 @@ std::vector<std::string> DictionaryTrie::predictCompletions(std::string prefix, 
 				it_max = it;
 			}
 		}
-		
+
 		words.push_back(it_max->first);
 		top_words.erase(it_max);
   }
-		
+
   return words;
 }
 
 void DictionaryTrie::getWords(TSTNode* node, std::string str, std::list<std::pair<std::string ,unsigned int>> & top_words, unsigned int num_completions) const{
 	if(node==NULL){return;}
-	else{ 
+	else{
 		std::string temp_str = str + node->data;
 		if (node->isWord){ // if the node is a word update the top_words list
 			// add the pair if its freq is higher than min freq in the list.
@@ -217,14 +222,12 @@ void DictionaryTrie::getWords(TSTNode* node, std::string str, std::list<std::pai
 						it_min = it;
 					}
 				}
-				
+
 				if (f_min < f_new){
 					top_words.erase(it_min);
 					top_words.push_back(std::make_pair(temp_str,f_new));
 				}
-					
 			}
-			
 		}
 		getWords(node->middle, temp_str, top_words, num_completions);
 		getWords(node->left, str, top_words, num_completions);
@@ -232,7 +235,6 @@ void DictionaryTrie::getWords(TSTNode* node, std::string str, std::list<std::pai
 	}
 	return;
 }
-
 
 /* Destructor */
 DictionaryTrie::~DictionaryTrie(){}

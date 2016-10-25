@@ -1,5 +1,11 @@
-#include <set>
+/* Author: Dion Chung & Bhanu Renukuntla
+   Date: 10/24/16
+   Assignment: PA2
+   This is the definition for DictionaryBST which utilzes set from the
+	 standard library for functions find and insert.
+*/
 
+#include <set>
 #include "util.h"
 #include "DictionaryBST.h"
 
@@ -14,7 +20,7 @@ bool DictionaryBST::insert(std::string word)
 }
 
 /* Return true if word is in the dictionary, and false otherwise */
-bool DictionaryBST::find(std::string word) const 
+bool DictionaryBST::find(std::string word) const
 {
 	std::set<std::string>::iterator it;
 	it=dict_bst.find(word);

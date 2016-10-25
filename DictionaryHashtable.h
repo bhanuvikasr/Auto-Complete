@@ -1,7 +1,9 @@
-/**
- *  CSE 100 PA3 C++ Autocomplete
- *  Authors: Jor-el Briones, Christine Alvarado
- */
+/* Author: Dion Chung & Bhanu Renukuntla
+   Date: 10/24/16
+   Assignment: PA2
+   This is the declaration for DictionaryHashtable which utilzes unordered_set
+   from the standard library.
+*/
 
 #ifndef DICTIONARY_HASHTABLE_H
 #define DICTIONARY_HASHTABLE_H
@@ -12,8 +14,8 @@
 /**
  *  The class for a dictionary ADT, implemented as a Hashtable
  * When you implement this class, you MUST use a Hashtable
- * in its implementation.  The C++ unordered_set implements 
- * a Hashtable, so we strongly suggest you use that to store 
+ * in its implementation.  The C++ unordered_set implements
+ * a Hashtable, so we strongly suggest you use that to store
  * the dictionary.
  */
 class DictionaryHashtable
@@ -33,7 +35,6 @@ public:
   ~DictionaryHashtable();
 
 private:
-  // Add your own data members and methods here
 	std::unordered_set<std::string> dict_h;
         std::pair<std::unordered_set<std::string>::const_iterator,bool> ret;
 

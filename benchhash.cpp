@@ -1,3 +1,11 @@
+/* Author: Dion Chung & Bhanu Renukuntla
+   Date: 10/24/16
+   Assignment: PA2
+   This defines benchhash, a function that benchmarks two hashing functions,
+   measuring the number of collisions and the average number of steps to search
+   for a key.
+*/
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -8,17 +16,15 @@
 #include <vector>
 #include <array>
 #include <cmath>
-#include "util.h"
-#include "DictionaryTrie.h"
-#include "DictionaryBST.h"
-#include "DictionaryHashtable.h"
 #define LETTERS 26
 using namespace std;
 using std::istream;
 using std::istringstream;
 
 /*
-hash function based on folding
+Hash function based on folding, characters in string are broken into chunks of
+4 and each character's ASCII code value is summed up, modified by a multiple of
+256.
 http://research.cs.vt.edu/AVresearch/hashing/strings.php
 */
 long sfold(string s, unsigned int m_size) {
@@ -44,16 +50,15 @@ long sfold(string s, unsigned int m_size) {
     mult *= 256;
   }
 
-  cout << s << " has sum  " << sum << endl;
   return(abs(sum) % m_size);
 }
 
 /*
-djb2 hash function
+djb2 hash function, geometric series that multiplies the rolling hash value with
+33 and then adds the current character's ASCII code value. Begins with 5381.
 http://www.cse.yorku.ca/~oz/hash.html
 */
 long djb2_hash(string s, unsigned int m_size) {
-
   unsigned long hash = 5381;
   char c[s.length()+1];
   strcpy(c, s.c_str());
@@ -62,10 +67,8 @@ long djb2_hash(string s, unsigned int m_size) {
       hash = ((hash << 5) + hash) + (int)c[k]; /* hash * 33 + c */
   }
 
-  cout << s << " has hash  " << hash << endl;
   return hash % m_size;
 }
-
 
 int main(int argc, char**argv){
   string dictfile = argv[1];
@@ -116,13 +119,8 @@ int main(int argc, char**argv){
     j++;
   }
 
-  // calculate statistics
+  // calculate statistics for hash function 1
   for (int k=0; k<hashtable1.size(); k++) {
-    // cout << "Row " << k << endl;
-    // for (set<string>::iterator it=hashtable1[k].begin(); it!=hashtable1[k].end(); ++it) {
-    //   cout << ' ' << *it;
-    // }
-    // cout << endl;
     if (results_ht1.size()<=hashtable1[k].size()) {
       worst_set1 = hashtable1[k].size();
       results_ht1.resize(hashtable1[k].size()+1);
@@ -133,7 +131,7 @@ int main(int argc, char**argv){
     results_ht1[hashtable1[k].size()]++;
   }
 
-  // print statistics
+  // print statistics for hash function 1
   cout << "Printing the statistics for Fold Hash Function with hash table size "
     << m_size << endl;
   cout << "#hits\t#slots receiving the #hits" << endl;
@@ -145,13 +143,8 @@ int main(int argc, char**argv){
   cout << "The worst case steps that would be needed to find a word is "
   << worst_set1 << endl;
 
-  // calculate statistics
+  // calculate statistics for hash function 2
   for (int k=0; k<hashtable2.size(); k++) {
-    // cout << "Row " << k << endl;
-    // for (set<string>::iterator it=hashtable2[k].begin(); it!=hashtable2[k].end(); ++it) {
-    //   cout << ' ' << *it;
-    // }
-    // cout << endl;
     if (results_ht2.size()<=hashtable2[k].size()) {
       worst_set2 = hashtable2[k].size();
       results_ht2.resize(hashtable2[k].size()+1);
@@ -162,7 +155,7 @@ int main(int argc, char**argv){
     results_ht2[hashtable2[k].size()]++;
   }
 
-  // print statistics
+  // print statistics for hash function 2
   cout << "Printing the statistics for djb Hash Function with hash table size "
     << m_size << endl;
   cout << "#hits\t#slots receiving the #hits" << endl;
@@ -173,11 +166,4 @@ int main(int argc, char**argv){
     << total_steps2/num_words << endl;
   cout << "The worst case steps that would be needed to find a word is "
     << worst_set2 << endl;
-
-  sfold("aaa", 1000);
-  sfold("aab", 1000);
-  sfold("abcde", 1000);
-  djb2_hash("aaa", 1000);
-  djb2_hash("aab", 1000);
-  djb2_hash("abcde", 1000);
 }

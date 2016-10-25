@@ -1,3 +1,11 @@
+/* Author: Dion Chung & Bhanu Renukuntla
+   Date: 10/24/16
+   Assignment: PA2
+   This defines benchdict, a function that benchmarks three dictionary
+	 implementations, BST, Hash Table, and Ternary Trie. The three are measured
+	 by the time it takes to perform 100 unsuccessful 'finds'.
+*/
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -23,19 +31,14 @@ int main(int argc, char**argv){
 	std::vector<std::pair<int, long long>> results_ht;
 	std::vector<std::pair<int, long long>> results_dt;
 
-	for (int count=0; count < argc; ++count)
-        std::cout << count << " " << argv[count] << '\n';
-
 	// get lines in file
 	ifstream f;
 	string line;
 	int line_count;
 	f.open(argv[4]);
 	for (line_count = 0; getline(f, line); ++line_count);
-	cout << "Line count " << line_count << endl;
 
 	for (int i =0;i<num_iterations;i++){
-		cout << "Iteration " << i+1 << " of " << num_iterations << endl;
 		// reset the if stream
 		ifstream in;
 		Utils u;

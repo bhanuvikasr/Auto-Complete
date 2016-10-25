@@ -1,7 +1,10 @@
-/**
- *  CSE 100 PA3 C++ Autocomplete
- *  Authors: Jor-el Briones, Christine Alvarado
- */
+/* Author: Dion Chung & Bhanu Renukuntla
+   Date: 10/24/16
+   Assignment: PA2
+   This is the declaration for TSTNode and DictionaryTrie, the container for the
+   nodes. DictionaryTrie has functions insert, find, predictCompletions, and
+   helper function getPrefixNode.
+*/
 
 #ifndef DICTIONARY_TRIE_H
 #define DICTIONARY_TRIE_H
@@ -10,9 +13,9 @@
 #include <string>
 #include <list>
 
-/** 
- * Class that stores the characters, if the character is the terminus of a
- * word, as well as the frequency. It is contained by the TST.
+/**
+ * Class that stores the character value, bool if the character is the terminus
+ of a word, as well as the frequency. It is contained by the TST.
  */
 class TSTNode {
 
@@ -23,7 +26,7 @@ public:
   TSTNode* parent;
   const char data;
   bool isWord;
-  int freq; 
+  int freq;
 
   TSTNode(const char d, bool w, const unsigned int f);
 
@@ -70,12 +73,13 @@ public:
 
 private:
 	TSTNode* root;
-  // Add your own data members and methods here
-  
-  /**getPrefixNode is a helper function that returns the pointer to the last letter of the word. If the word is not found in the Dict then it returns a NULL pointer.
+
+  /* getPrefixNode is a helper function that returns the pointer to the last
+  letter of the word. If the word is not found in the Dict then it returns a
+  NULL pointer.
   */
   TSTNode* getPrefixNode(std::string word) const;
-  
+
   void getWords(TSTNode* node, std::string str, std::list<std::pair<std::string ,unsigned int>> & top_words, unsigned int num_completions) const;
 };
 
