@@ -56,7 +56,8 @@ int main(int argc, char**argv){
 
 		int insert_count = size;
 		if (line_count<size) {
-			cout << "WARNING: More words than in file" << endl;
+			cout << "WARNING: More words in iteration " << i << " than in file, " 
+				<< "results past this limit should be ignored" << endl;
 			insert_count = line_count;
 		}
 
