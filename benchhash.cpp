@@ -32,24 +32,21 @@ long sfold(string s, unsigned int m_size) {
   long sum = 0;
   for (int j = 0; j < intLength; j++) {
     string subs = s.substr(j * 4, (j * 4) + 4);
-    char c[subs.length()+1];
-    strcpy(c, subs.c_str());
     long mult = 1;
-    for (int k = 0; k < sizeof(c)-1; k++) {
-      sum += c[k] * mult;
+    for (int k = 0; k < subs.length(); k++) {
+      sum += subs[k] * mult;
       mult *= 256;
     }
   }
 
   string subs = s.substr(intLength * 4);
-  char c[subs.length()+1];
-  strcpy(c, subs.c_str());
   long mult = 1;
-  for (int k = 0; k < sizeof(c)-1; k++) {
-    sum += c[k] * mult;
+  for (int k = 0; k < subs.length(); k++) {
+    sum += subs[k] * mult;
     mult *= 256;
   }
 
+  cout << s << " hash is " << sum << endl;
   return(abs(sum) % m_size);
 }
 
@@ -60,11 +57,9 @@ http://www.cse.yorku.ca/~oz/hash.html
 */
 long djb2_hash(string s, unsigned int m_size) {
   unsigned long hash = 5381;
-  char c[s.length()+1];
-  strcpy(c, s.c_str());
 
-  for (int k = 0; k < sizeof(c)-1; k++) {
-      hash = ((hash << 5) + hash) + (int)c[k]; /* hash * 33 + c */
+  for (int k = 0; k < s.length(); k++) {
+      hash = ((hash << 5) + hash) + (int)s[k]; /* hash * 33 + c */
   }
 
   return hash % m_size;
@@ -166,4 +161,5 @@ int main(int argc, char**argv){
     << total_steps2/num_words << endl;
   cout << "The worst case steps that would be needed to find a word is "
     << worst_set2 << endl;
+
 }
